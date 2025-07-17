@@ -1,9 +1,10 @@
 import 'package:blog_app_springboot/core/theme/theme.dart';
 import 'package:blog_app_springboot/features/auth/presentation/pages/signup_page.dart';
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(DevicePreview(enabled: true, builder: (context) => const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
