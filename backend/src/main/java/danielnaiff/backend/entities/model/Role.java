@@ -15,7 +15,7 @@ public class Role {
     private String nome;
 
     @Enumerated(EnumType.STRING)
-    private RoleValues roleType;
+    private RoleValues values;
 
     public Long getRoleId() {
         return roleId;

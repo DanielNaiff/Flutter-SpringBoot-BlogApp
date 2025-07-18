@@ -13,6 +13,8 @@ public class Blog {
     @Column(name="blog_id")
     private Long blogId;
 
+    @ManyToOne
+    @JoinColumn(name="user_id")
     private User user;
 
     private String content;

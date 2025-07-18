@@ -1,0 +1,1 @@
+--insert ignore into tb_roles (role_id, name) values(2, 'BASIC');
