@@ -18,3 +18,9 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+
+jwt:
+  public:
+    key: classpath:app.pub
+  private:
+    key: classpath:app.key
