@@ -2,20 +2,18 @@ package danielnaiff.backend.controller;
 
 import danielnaiff.backend.entities.dto.LoginResponseDTO;
 import danielnaiff.backend.entities.dto.UserRequestDTO;
-import danielnaiff.backend.service.AuthService;
+import danielnaiff.backend.service.LogInService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class AuthController {
+public class LogInController {
 
-    private final AuthService authService;
+    private final LogInService authService;
 
-    public AuthController(AuthService authService){
+    public LogInController(LogInService authService){
         this.authService = authService;
     }
 

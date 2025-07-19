@@ -15,6 +15,9 @@ public class User {
     private UUID userId;
 
     @Column(unique = true)
+    private String email;
+
+    @Column(unique = true)
     private String userName;
 
     private String password;
@@ -29,6 +32,22 @@ public class User {
 
     public UUID getUserId() {
         return userId;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public void setUserId(UUID userId) {
