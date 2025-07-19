@@ -26,7 +26,7 @@ public class LogInService {
     }
 
     public LoginResponseDTO login(UserRequestDTO userRequestDTO){
-        var userOptional = userRepository.findByUserName(userRequestDTO.username());
+        var userOptional = userRepository.findByEmail(userRequestDTO.email());
 
         if (userOptional.isEmpty()) {
             throw new BadCredentialsException("User or password is invalid!!");

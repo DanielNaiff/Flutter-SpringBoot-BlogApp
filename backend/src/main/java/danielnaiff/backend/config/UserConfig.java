@@ -36,7 +36,7 @@ public class UserConfig implements CommandLineRunner {
 
 //        var userBasic = userRepository.findByUserName("BASIC");
 
-        var userBasic = userRepository.findByUserName("BASIC");
+        var userBasic = userRepository.findByEmail("danielnaiff@gmail.com");
 
         final Role finalRoleUser = roleUser;
 
@@ -47,6 +47,7 @@ public class UserConfig implements CommandLineRunner {
                 () -> {
                     var user = new User();
                     user.setUsername("BASIC");
+                    user.setEmail("danielnaiff@gmail.com");
                     user.setPassword(passwordEncoder.encode("123"));
                     user.setRoles(Set.of(finalRoleUser));
                     userRepository.save(user);
