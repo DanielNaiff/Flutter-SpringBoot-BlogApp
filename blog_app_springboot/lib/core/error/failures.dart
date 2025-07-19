@@ -1,5 +1,8 @@
-class Failure {
+abstract class Failure {
   final String message;
+  Failure(this.message);
+}
 
-  Failure([this.message = 'An unexpected error ocurred']);
+class ServerFailure extends Failure {
+  ServerFailure(String message) : super(message);
 }

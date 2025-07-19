@@ -1,4 +1,6 @@
 package danielnaiff.backend.entities.dto;
 
-public record UserResponseDTO() {
+import java.util.UUID;
+
+public record UserResponseDTO(UUID id, String username, String email)  {
 }

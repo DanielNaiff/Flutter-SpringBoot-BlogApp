@@ -25,7 +25,7 @@ public class UserService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    public void createUser(UserRequestDTO userRequestDTO){
+    public User createUser(UserRequestDTO userRequestDTO){
       var basiRole = roleRepository.findByName(Role.Values.BASIC.name());
       var userFromDb = userRepository.findByEmail(userRequestDTO.email());
 
@@ -39,7 +39,7 @@ public class UserService {
       user.setPassword(bCryptPasswordEncoder.encode(userRequestDTO.password()));
       user.setRoles(Set.of(basiRole));
 
-      userRepository.save(user);
+     return userRepository.save(user);
 
     }
 }
