@@ -6,7 +6,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Table(name = "tb_user")
+@Table(name = "tb_users")
 public class User {
 
     @Id
@@ -15,7 +15,7 @@ public class User {
     private UUID userId;
 
     @Column(unique = true)
-    private String username;
+    private String userName;
 
     private String password;
 
@@ -36,11 +36,11 @@ public class User {
     }
 
     public String getUsername() {
-        return username;
+        return userName;
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.userName = username;
     }
 
     public String getPassword() {

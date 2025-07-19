@@ -2,19 +2,15 @@ package danielnaiff.backend.service;
 
 import danielnaiff.backend.entities.dto.LoginResponseDTO;
 import danielnaiff.backend.entities.dto.UserRequestDTO;
-import danielnaiff.backend.entities.model.User;
 import danielnaiff.backend.repository.UserRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.util.Optional;
 
 @Service
 public class AuthService {
