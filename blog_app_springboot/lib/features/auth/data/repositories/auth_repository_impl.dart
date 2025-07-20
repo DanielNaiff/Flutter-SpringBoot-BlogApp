@@ -1,4 +1,4 @@
-import 'package:blog_app_springboot/core/error/exceptions.dart';
+import 'package:blog_app_springboot/core/common/entities/user.dart';
 import 'package:blog_app_springboot/core/error/failures.dart';
 import 'package:blog_app_springboot/features/auth/data/datasources/auth_remote_data_source.dart';
 import 'package:blog_app_springboot/features/auth/data/model/user_model.dart';
@@ -9,7 +9,7 @@ class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource remoteDataSource;
   const AuthRepositoryImpl(this.remoteDataSource);
   @override
-  Future<Either<Failure, String>> logInWithEmailPassword({
+  Future<Either<Failure, User>> logInWithEmailPassword({
     required String email,
     required String password,
   }) {
@@ -18,7 +18,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, UserModel>> signUpWithEmailPassword({
+  Future<Either<Failure, User>> signUpWithEmailPassword({
     required String name,
     required String email,
     required String password,
@@ -32,7 +32,7 @@ class AuthRepositoryImpl implements AuthRepository {
     );
   }
 
-  Future<Either<Failure, UserModel>> _getUser(
+  Future<Either<Failure, User>> _getUser(
     Future<UserModel> Function() callback,
   ) async {
     try {
