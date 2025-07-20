@@ -1,21 +1,39 @@
 import 'package:blog_app_springboot/core/common/entities/user.dart';
 
 class UserModel extends User {
-  UserModel({required super.id, required super.email, required super.name});
+  final String accessToken;
+  final String expiresIn;
+  UserModel({
+    required super.id,
+    required super.email,
+    required super.name,
+    required this.accessToken,
+    required this.expiresIn,
+  });
 
   factory UserModel.fromJson(Map<String, dynamic> map) {
     return UserModel(
       id: map['id'] ?? '',
       email: map['email'] ?? '',
       name: map['name'] ?? '',
+      accessToken: map['accsessToken'] ?? '',
+      expiresIn: map['expiresIn'] ?? '',
     );
   }
 
-  UserModel copyWith({String? id, String? email, String? name}) {
+  UserModel copyWith({
+    String? id,
+    String? email,
+    String? name,
+    String? accessToken,
+    String? expiresIn,
+  }) {
     return UserModel(
       id: id ?? this.id,
       email: email ?? this.email,
       name: name ?? this.name,
+      accessToken: accessToken ?? this.accessToken,
+      expiresIn: expiresIn ?? this.expiresIn,
     );
   }
 }

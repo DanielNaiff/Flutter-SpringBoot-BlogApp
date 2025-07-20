@@ -2,6 +2,7 @@ package danielnaiff.backend.service;
 
 import danielnaiff.backend.entities.dto.LoginResponseDTO;
 import danielnaiff.backend.entities.dto.UserRequestDTO;
+import danielnaiff.backend.entities.dto.UserResponseDTO;
 import danielnaiff.backend.repository.UserRepository;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -49,7 +50,8 @@ public class LogInService {
                 .build();
 
         var jwtValue = jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
+        var userResponse =new UserResponseDTO(user.getUserId(), user.getUserName(), user.getEmail());
 
-        return new LoginResponseDTO(jwtValue, expiresIn);
+        return new LoginResponseDTO(jwtValue, expiresIn, userResponse.id(), userResponse.username(), userResponse.email());
     }
 }

@@ -3,6 +3,7 @@ package danielnaiff.backend.controller;
 import danielnaiff.backend.entities.dto.LoginResponseDTO;
 import danielnaiff.backend.entities.dto.UserRequestDTO;
 import danielnaiff.backend.service.LogInService;
+import jakarta.transaction.Transactional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +18,7 @@ public class LogInController {
         this.authService = authService;
     }
 
+    @Transactional
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(@RequestBody UserRequestDTO userRequestDTO) {
         LoginResponseDTO response = authService.login(userRequestDTO);

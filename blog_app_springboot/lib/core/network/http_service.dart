@@ -14,11 +14,18 @@ class HttpClientService {
     final uri = Uri.parse('$baseUrl$endpoint');
 
     try {
+      print('[DEBUG] GET request to: $uri');
+      if (headers != null) print('[DEBUG] Headers: $headers');
+
       final response = await http.get(uri, headers: headers);
+
+      print('[DEBUG] Response Status Code: ${response.statusCode}');
+      print('[DEBUG] Response Body: ${response.body}');
+
       _handleError(response);
       return response;
     } catch (e) {
-      print('Erro na requisição POST: $e');
+      print('[ERROR] Exception during GET request: $e');
       throw ServeException('Erro na requisição GET: $e');
     }
   }
@@ -32,27 +39,33 @@ class HttpClientService {
     final defaultHeaders = {'Content-Type': 'application/json', ...?headers};
 
     try {
+      print('[DEBUG] POST request to: $uri');
+      print('[DEBUG] Headers: $defaultHeaders');
+      print('[DEBUG] Body: ${jsonEncode(body)}');
+
       final response = await http.post(
         uri,
         headers: defaultHeaders,
         body: jsonEncode(body),
       );
+
+      print('[DEBUG] Response Status Code: ${response.statusCode}');
+      print('[DEBUG] Response Body: ${response.body}');
+
       _handleError(response);
       return response;
     } catch (e) {
-      print('Erro na requisição POST: $e');
+      print('[ERROR] Exception during POST request: $e');
       throw ServeException('Erro na requisição POST: $e');
     }
   }
 
   void _handleError(http.Response response) {
-    print(response.statusCode);
+    print('[DEBUG] Handling response status: ${response.statusCode}');
     switch (response.statusCode) {
       case 200:
       case 201:
-        // Sucesso, não faz nada
         return;
-
       case 400:
         throw ServeException('Requisição inválida (400): ${response.body}');
       case 401:
@@ -77,7 +90,6 @@ class HttpClientService {
         } else if (response.statusCode >= 500) {
           throw ServeException('Erro servidor ${response.statusCode}.');
         } else {
-          // Outros status inesperados
           throw ServeException(
             'Erro inesperado ${response.statusCode}: ${response.body}',
           );
