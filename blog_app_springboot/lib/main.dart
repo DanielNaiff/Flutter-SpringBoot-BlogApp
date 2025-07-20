@@ -1,5 +1,6 @@
 import 'package:blog_app_springboot/core/theme/theme.dart';
 import 'package:blog_app_springboot/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:blog_app_springboot/features/auth/presentation/bloc/auth_event.dart';
 import 'package:blog_app_springboot/features/auth/presentation/pages/login_page.dart';
 import 'package:blog_app_springboot/init_dependencies.dart';
 import 'package:device_preview/device_preview.dart';
@@ -23,8 +24,19 @@ void main() async {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<AuthBloc>().add(AuthIsUserLoggedIn());
+  }
 
   @override
   Widget build(BuildContext context) {

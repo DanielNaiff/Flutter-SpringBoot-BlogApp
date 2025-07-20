@@ -14,6 +14,8 @@ abstract interface class AuthRemoteDataSource {
     required String email,
     required String password,
   });
+
+  Future<UserModel?> currentUser();
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -48,5 +50,11 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
     final data = jsonDecode(response.body);
     return UserModel.fromJson(data);
+  }
+
+  @override
+  Future<UserModel?> currentUser() {
+    // TODO: implement currentUser
+    throw UnimplementedError();
   }
 }

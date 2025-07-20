@@ -46,4 +46,10 @@ class AuthRepositoryImpl implements AuthRepository {
       return Left(ServerFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, User>> currentUser() {
+    // TODO: implement currentUser
+    throw UnimplementedError();
+  }
 }

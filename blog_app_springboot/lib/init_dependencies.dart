@@ -2,6 +2,7 @@ import 'package:blog_app_springboot/core/network/http_service.dart';
 import 'package:blog_app_springboot/core/secrets/app_secrets.dart';
 import 'package:blog_app_springboot/features/auth/data/datasources/auth_remote_data_source.dart';
 import 'package:blog_app_springboot/features/auth/data/repositories/auth_repository_impl.dart';
+import 'package:blog_app_springboot/features/auth/domain/usecases/current_user.dart';
 import 'package:blog_app_springboot/features/auth/domain/usecases/use_login.dart';
 import 'package:blog_app_springboot/features/auth/domain/usecases/user_sign_up.dart';
 import 'package:blog_app_springboot/features/auth/presentation/bloc/auth_bloc.dart';
@@ -38,9 +39,14 @@ void _initAuth() {
     () => UserLogin(authRepository: getIt<AuthRepositoryImpl>()),
   );
 
+  getIt.registerFactory<CurrentUser>(
+    () => CurrentUser(authRepository: getIt<AuthRepositoryImpl>()),
+  );
+
   // Bloc
   getIt.registerFactory<AuthBloc>(
     () => AuthBloc(
+      currentUser: getIt<CurrentUser>(),
       userSignUp: getIt<UserSignUp>(),
       userLogin: getIt<UserLogin>(),
     ),
