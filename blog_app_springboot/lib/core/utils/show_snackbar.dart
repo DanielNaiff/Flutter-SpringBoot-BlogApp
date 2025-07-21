@@ -22,7 +22,10 @@ void showSnackBar(
             Icon(icon, color: Colors.white),
             const SizedBox(width: 12),
             Expanded(
-              child: Text(message, style: const TextStyle(color: Colors.white)),
+              child: Text(
+                message.toString(),
+                style: const TextStyle(color: Colors.white),
+              ),
             ),
           ],
         ),

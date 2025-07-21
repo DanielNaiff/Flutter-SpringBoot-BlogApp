@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Set;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -41,5 +42,9 @@ public class UserService {
 
      return userRepository.save(user);
 
+    }
+
+    public User findById(UUID id){
+        return userRepository.findById(id).orElse(null);
     }
 }

@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:blog_app_springboot/core/common/entities/token.dart';
+import 'package:blog_app_springboot/core/error/exceptions.dart';
 import 'package:blog_app_springboot/core/network/http_service.dart';
 import 'package:blog_app_springboot/features/auth/data/model/user_model.dart';
 
@@ -48,13 +50,42 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       body: {'email': email, 'password': password},
     );
 
-    final data = jsonDecode(response.body);
-    return UserModel.fromJson(data);
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      final token = data['accessToken'] as String;
+
+      // Salva token localmente
+      await TokenStorage.saveToken(token);
+
+      // Retorna usuário
+      return UserModel.fromJson(data);
+    } else {
+      print("oooooooooooh");
+      throw ServeException('Erro ao logar: ${response.statusCode}');
+    }
   }
 
   @override
-  Future<UserModel?> currentUser() {
-    // TODO: implement currentUser
-    throw UnimplementedError();
+  Future<UserModel?> currentUser() async {
+    final token = await TokenStorage.getToken();
+    try {
+      final response = await client.get(
+        '/me',
+        headers: {'Authorization': 'Bearer $token'},
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        return UserModel.fromJson(data);
+      } else if (response.statusCode == 401) {
+        return null;
+      } else {
+        throw ServeException(
+          'Erro inesperado: ${response.statusCode.toString()}',
+        );
+      }
+    } catch (e) {
+      throw ServeException(e.toString());
+    }
   }
 }

@@ -1,4 +1,5 @@
 import 'package:blog_app_springboot/core/common/entities/user.dart';
+import 'package:blog_app_springboot/core/error/exceptions.dart';
 import 'package:blog_app_springboot/core/error/failures.dart';
 import 'package:blog_app_springboot/features/auth/data/datasources/auth_remote_data_source.dart';
 import 'package:blog_app_springboot/features/auth/data/model/user_model.dart';
@@ -48,8 +49,19 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, User>> currentUser() {
-    // TODO: implement currentUser
-    throw UnimplementedError();
+  Future<Either<Failure, User>> currentUser() async {
+    try {
+      final user = await remoteDataSource.currentUser();
+
+      if (user == null) {
+        return left(ServerFailure('User not logged in!'));
+      }
+
+      return right(user);
+    } on ServeException catch (e) {
+      return left(ServerFailure(e.message.toString()));
+    } catch (e) {
+      return left(ServerFailure('Erro inesperado: ${e.toString()}'));
+    }
   }
 }

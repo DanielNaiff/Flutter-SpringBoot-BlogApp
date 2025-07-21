@@ -1,3 +1,4 @@
+import 'package:blog_app_springboot/core/common/cubbits/app_user/app_user_cubit.dart';
 import 'package:blog_app_springboot/core/network/http_service.dart';
 import 'package:blog_app_springboot/core/secrets/app_secrets.dart';
 import 'package:blog_app_springboot/features/auth/data/datasources/auth_remote_data_source.dart';
@@ -15,6 +16,9 @@ Future<void> setupDependencies() async {
   getIt.registerSingleton<HttpClientService>(
     HttpClientService(baseUrl: AppSecrets.springBootUrl),
   );
+
+  //core
+  getIt.registerLazySingleton(() => AppUserCubit());
 
   _initAuth();
 }
@@ -49,6 +53,7 @@ void _initAuth() {
       currentUser: getIt<CurrentUser>(),
       userSignUp: getIt<UserSignUp>(),
       userLogin: getIt<UserLogin>(),
+      appUserCubit: getIt<AppUserCubit>(),
     ),
   );
 }

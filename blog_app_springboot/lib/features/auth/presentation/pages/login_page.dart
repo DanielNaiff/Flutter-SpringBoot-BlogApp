@@ -1,4 +1,4 @@
-import 'package:blog_app_springboot/core/common/widgets.dart/loader.dart';
+import 'package:blog_app_springboot/core/common/widgets/loader.dart';
 import 'package:blog_app_springboot/core/theme/app_pallete.dart';
 import 'package:blog_app_springboot/core/utils/show_snackbar.dart';
 import 'package:blog_app_springboot/features/auth/presentation/bloc/auth_bloc.dart';
@@ -38,7 +38,8 @@ class _LoginPageState extends State<LoginPage> {
         child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
             if (state is AuthFailure) {
-              showSnackBar(context, state.message);
+              print("aaaaaaaaaaaaaaa");
+              showSnackBar(context, state.message.toString());
             }
           },
           builder: (context, state) {

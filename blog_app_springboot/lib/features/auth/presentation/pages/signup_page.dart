@@ -1,4 +1,4 @@
-import 'package:blog_app_springboot/core/common/widgets.dart/loader.dart';
+import 'package:blog_app_springboot/core/common/widgets/loader.dart';
 import 'package:blog_app_springboot/core/theme/app_pallete.dart';
 import 'package:blog_app_springboot/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:blog_app_springboot/features/auth/presentation/bloc/auth_event.dart';
