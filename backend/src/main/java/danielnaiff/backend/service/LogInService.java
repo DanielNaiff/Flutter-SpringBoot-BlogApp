@@ -40,7 +40,7 @@ public class LogInService {
         }
 
         var now = Instant.now();
-        var expiresIn = 300L;
+        var expiresIn = 1000L;
 
         var claims = JwtClaimsSet.builder()
                 .issuer("mybackend")
