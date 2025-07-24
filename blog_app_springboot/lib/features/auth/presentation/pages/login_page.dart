@@ -38,7 +38,6 @@ class _LoginPageState extends State<LoginPage> {
         child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
             if (state is AuthFailure) {
-              print("aaaaaaaaaaaaaaa");
               showSnackBar(context, state.message.toString());
             }
           },

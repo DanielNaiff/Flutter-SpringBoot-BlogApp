@@ -2,8 +2,11 @@ package danielnaiff.backend.entities.model;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "tb_blogs")
@@ -17,10 +20,64 @@ public class Blog {
     @JoinColumn(name="user_id")
     private User user;
 
+    @Lob
+    @Column(name = "image", columnDefinition = "BYTEA")
+    private byte[] imageData;
+
+    @Column(name="title", nullable = false)
+    private String title;
+
+    @Column(name="content", nullable = false)
     private String content;
 
+    @ElementCollection
+    private List<String> topics = new ArrayList<>();
+
     @CreationTimestamp
-    private Instant creationTimestamp;
+    private Instant createAt;
+
+    @UpdateTimestamp
+    private Instant updatedAt;
+
+    public byte[] getImageData() {
+        return imageData;
+    }
+
+    public void setImageData(byte[] imageData) {
+        this.imageData = imageData;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public List<String> getTopics() {
+        return topics;
+    }
+
+    public void setTopics(List<String> topics) {
+        this.topics = topics;
+    }
+
+    public Instant getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Instant createAt) {
+        this.createAt = createAt;
+    }
+
+    public Instant getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Instant updatedAt) {
+        this.updatedAt = updatedAt;
+    }
 
     public Long getBlogId() {
         return blogId;
@@ -47,10 +104,10 @@ public class Blog {
     }
 
     public Instant getCreationTimestamp() {
-        return creationTimestamp;
+        return createAt;
     }
 
     public void setCreationTimestamp(Instant creationTimestamp) {
-        this.creationTimestamp = creationTimestamp;
+        this.createAt = creationTimestamp;
     }
 }
