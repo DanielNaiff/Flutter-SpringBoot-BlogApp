@@ -20,8 +20,7 @@ public class Blog {
     @JoinColumn(name="user_id")
     private User user;
 
-    @Lob
-    @Column(name = "image", columnDefinition = "BYTEA")
+    @Column(name = "image", columnDefinition = "bytea")
     private byte[] imageData;
 
     @Column(name="title", nullable = false)
@@ -38,6 +37,7 @@ public class Blog {
 
     @UpdateTimestamp
     private Instant updatedAt;
+
 
     public byte[] getImageData() {
         return imageData;

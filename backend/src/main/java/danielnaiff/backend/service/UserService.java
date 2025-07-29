@@ -1,6 +1,6 @@
 package danielnaiff.backend.service;
 
-import danielnaiff.backend.entities.dto.UserRequestDTO;
+import danielnaiff.backend.entities.dto.user.UserRequestDTO;
 import danielnaiff.backend.entities.model.Role;
 import danielnaiff.backend.entities.model.User;
 import danielnaiff.backend.repository.RoleRepository;

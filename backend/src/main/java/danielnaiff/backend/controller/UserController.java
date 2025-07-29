@@ -1,10 +1,9 @@
 package danielnaiff.backend.controller;
 
-import danielnaiff.backend.entities.dto.UserRequestDTO;
-import danielnaiff.backend.entities.dto.UserResponseDTO;
+import danielnaiff.backend.entities.dto.user.UserRequestDTO;
+import danielnaiff.backend.entities.dto.user.UserResponseDTO;
 import danielnaiff.backend.service.UserService;
 import jakarta.transaction.Transactional;
-import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;

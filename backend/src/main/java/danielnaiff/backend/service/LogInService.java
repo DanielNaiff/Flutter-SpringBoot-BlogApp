@@ -1,8 +1,8 @@
 package danielnaiff.backend.service;
 
-import danielnaiff.backend.entities.dto.LoginResponseDTO;
-import danielnaiff.backend.entities.dto.UserRequestDTO;
-import danielnaiff.backend.entities.dto.UserResponseDTO;
+import danielnaiff.backend.entities.dto.user.LoginResponseDTO;
+import danielnaiff.backend.entities.dto.user.UserRequestDTO;
+import danielnaiff.backend.entities.dto.user.UserResponseDTO;
 import danielnaiff.backend.repository.UserRepository;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

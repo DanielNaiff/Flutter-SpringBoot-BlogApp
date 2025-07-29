@@ -1,4 +1,4 @@
-package danielnaiff.backend.entities.dto;
+package danielnaiff.backend.entities.dto.user;
 
 import java.util.UUID;
 
