@@ -4,10 +4,7 @@ import danielnaiff.backend.entities.dto.blog.BlogRequestDTO;
 import danielnaiff.backend.entities.dto.blog.BlogResponseDTO;
 import danielnaiff.backend.service.BlogService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 
@@ -27,5 +24,11 @@ public class BlogController {
         return ResponseEntity
                 .created(URI.create("/api/blogs/" + blogResponseDTO.id()))
                 .body(blogResponseDTO);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<BlogResponseDTO> findById(@PathVariable Long id) throws Exception{
+        BlogResponseDTO blogResponseDTO = blogService.findById(id);
+        return ResponseEntity.ok(blogResponseDTO);
     }
 }

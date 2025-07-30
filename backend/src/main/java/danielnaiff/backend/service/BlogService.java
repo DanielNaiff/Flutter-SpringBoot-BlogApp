@@ -33,4 +33,10 @@ public class BlogService {
         BlogResponseDTO blogResponseDTO = BlogMapper.toResponseDTO(savedBlog);
         return blogResponseDTO;
     }
+
+    public BlogResponseDTO findById(Long id) throws Exception{
+        Blog blog = blogRepository.findById(id).orElseThrow(() -> new Exception("Usuário não encontrado"));
+
+        return BlogMapper.toResponseDTO(blog);
+    }
 }
