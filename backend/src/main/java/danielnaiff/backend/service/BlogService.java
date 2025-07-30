@@ -10,6 +10,9 @@ import danielnaiff.backend.repository.UserRepository;
 import org.springframework.expression.ExpressionException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class BlogService {
 
@@ -38,5 +41,11 @@ public class BlogService {
         Blog blog = blogRepository.findById(id).orElseThrow(() -> new Exception("Usuário não encontrado"));
 
         return BlogMapper.toResponseDTO(blog);
+    }
+
+    public List<BlogResponseDTO> findAll(){
+        List<Blog> blogs = blogRepository.findAll();
+
+        return blogs.stream().map(BlogMapper::toResponseDTO).collect(Collectors.toList());
     }
 }

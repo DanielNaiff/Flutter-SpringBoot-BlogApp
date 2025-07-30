@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/blogs")
@@ -30,5 +31,15 @@ public class BlogController {
     public ResponseEntity<BlogResponseDTO> findById(@PathVariable Long id) throws Exception{
         BlogResponseDTO blogResponseDTO = blogService.findById(id);
         return ResponseEntity.ok(blogResponseDTO);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<BlogResponseDTO>> findId(){
+        List<BlogResponseDTO> blogResponseDTOS = blogService.findAll();
+        if(blogResponseDTOS.isEmpty()){
+            return ResponseEntity.status(500).build();
+        }
+
+        return ResponseEntity.ok(blogResponseDTOS);
     }
 }
