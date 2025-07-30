@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 public record BlogRequestDTO(
+        Long blogId,
         UUID userId,
         byte[] imageData,
         String title,

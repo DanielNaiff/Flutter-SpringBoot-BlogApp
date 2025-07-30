@@ -42,4 +42,11 @@ public class BlogController {
 
         return ResponseEntity.ok(blogResponseDTOS);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<BlogResponseDTO> update(@RequestBody BlogRequestDTO requestDTO) throws Exception{
+        BlogResponseDTO responseDTO = blogService.update(requestDTO);
+
+        return ResponseEntity.ok(responseDTO);
+    }
 }

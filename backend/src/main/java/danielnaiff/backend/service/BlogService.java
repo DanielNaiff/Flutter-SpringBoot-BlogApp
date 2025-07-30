@@ -33,8 +33,7 @@ public class BlogService {
 
         Blog savedBlog = blogRepository.save(blog);
 
-        BlogResponseDTO blogResponseDTO = BlogMapper.toResponseDTO(savedBlog);
-        return blogResponseDTO;
+        return BlogMapper.toResponseDTO(savedBlog);
     }
 
     public BlogResponseDTO findById(Long id) throws Exception{
@@ -47,5 +46,19 @@ public class BlogService {
         List<Blog> blogs = blogRepository.findAll();
 
         return blogs.stream().map(BlogMapper::toResponseDTO).collect(Collectors.toList());
+    }
+
+    public BlogResponseDTO update(BlogRequestDTO requestDTO) throws Exception{
+        Blog blog = blogRepository.findById(requestDTO.blogId()).orElseThrow(() -> new Exception("Blog nao encontrado"));
+
+        blog.setImageData(requestDTO.imageData());
+        blog.setTitle(requestDTO.title());
+        blog.setContent(requestDTO.content());
+        blog.setTopics(requestDTO.topics());
+
+        Blog updateBlog = blogRepository.save(blog);
+
+        return BlogMapper.toResponseDTO(updateBlog);
+
     }
 }
