@@ -48,8 +48,8 @@ public class BlogService {
         return blogs.stream().map(BlogMapper::toResponseDTO).collect(Collectors.toList());
     }
 
-    public BlogResponseDTO update(BlogRequestDTO requestDTO) throws Exception{
-        Blog blog = blogRepository.findById(requestDTO.blogId()).orElseThrow(() -> new Exception("Blog nao encontrado"));
+    public BlogResponseDTO update(BlogRequestDTO requestDTO, Long id) throws Exception{
+        Blog blog = blogRepository.findById(id).orElseThrow(() -> new Exception("Blog nao encontrado"));
 
         blog.setImageData(requestDTO.imageData());
         blog.setTitle(requestDTO.title());

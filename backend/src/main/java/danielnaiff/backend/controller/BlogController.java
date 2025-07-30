@@ -44,13 +44,13 @@ public class BlogController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BlogResponseDTO> update(@RequestBody BlogRequestDTO requestDTO) throws Exception{
-        BlogResponseDTO responseDTO = blogService.update(requestDTO);
+    public ResponseEntity<BlogResponseDTO> update(@PathVariable Long id ,@RequestBody BlogRequestDTO requestDTO) throws Exception{
+        BlogResponseDTO responseDTO = blogService.update(requestDTO, id);
 
         return ResponseEntity.ok(responseDTO);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable Long id){
         blogService.deleteById(id);
 
