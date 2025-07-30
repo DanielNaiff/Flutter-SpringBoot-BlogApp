@@ -49,4 +49,11 @@ public class BlogController {
 
         return ResponseEntity.ok(responseDTO);
     }
+
+    @DeleteMapping
+    public ResponseEntity<Void> deleteById(@PathVariable Long id){
+        blogService.deleteById(id);
+
+        return ResponseEntity.ok().build();
+    }
 }

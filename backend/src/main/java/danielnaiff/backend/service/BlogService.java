@@ -61,4 +61,8 @@ public class BlogService {
         return BlogMapper.toResponseDTO(updateBlog);
 
     }
+
+    public void deleteById(Long id){
+        blogRepository.deleteById(id);
+    }
 }
