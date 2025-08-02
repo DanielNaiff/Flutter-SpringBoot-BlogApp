@@ -5,7 +5,7 @@ import 'package:fpdart/src/either.dart';
 
 import '../../../../core/usecase/usecase.dart';
 
-class UserLogin implements Usecase<User, UserLoginParams> {
+class UserLogin implements UseCase<User, UserLoginParams> {
   final AuthRepository authRepository;
 
   UserLogin({required this.authRepository});

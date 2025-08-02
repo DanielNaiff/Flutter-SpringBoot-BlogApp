@@ -61,7 +61,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       return UserModel.fromJson(data);
     } else {
       print("oooooooooooh");
-      throw ServeException('Erro ao logar: ${response.statusCode}');
+      throw ServerException('Erro ao logar: ${response.statusCode}');
     }
   }
 
@@ -80,12 +80,12 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       } else if (response.statusCode == 401) {
         return null;
       } else {
-        throw ServeException(
+        throw ServerException(
           'Erro inesperado: ${response.statusCode.toString()}',
         );
       }
     } catch (e) {
-      throw ServeException(e.toString());
+      throw ServerException(e.toString());
     }
   }
 }

@@ -4,7 +4,7 @@ import 'package:blog_app_springboot/core/usecase/usecase.dart';
 import 'package:blog_app_springboot/features/auth/domain/repository/auth_repository.dart';
 import 'package:fpdart/src/either.dart';
 
-class UserSignUp implements Usecase<User, UserSignUpParams> {
+class UserSignUp implements UseCase<User, UserSignUpParams> {
   final AuthRepository authRepository;
   const UserSignUp(this.authRepository);
   @override

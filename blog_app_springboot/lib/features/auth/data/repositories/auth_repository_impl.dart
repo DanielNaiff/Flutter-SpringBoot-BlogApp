@@ -58,7 +58,7 @@ class AuthRepositoryImpl implements AuthRepository {
       }
 
       return right(user);
-    } on ServeException catch (e) {
+    } on ServerException catch (e) {
       return left(ServerFailure(e.message.toString()));
     } catch (e) {
       return left(ServerFailure('Erro inesperado: ${e.toString()}'));

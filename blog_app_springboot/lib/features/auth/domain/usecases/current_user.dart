@@ -4,7 +4,7 @@ import 'package:blog_app_springboot/core/usecase/usecase.dart';
 import 'package:blog_app_springboot/features/auth/domain/repository/auth_repository.dart';
 import 'package:fpdart/src/either.dart';
 
-class CurrentUser implements Usecase<User, NoParams> {
+class CurrentUser implements UseCase<User, NoParams> {
   final AuthRepository authRepository;
 
   CurrentUser({required this.authRepository});

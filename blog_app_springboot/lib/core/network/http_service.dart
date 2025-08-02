@@ -26,7 +26,7 @@ class HttpClientService {
       return response;
     } catch (e) {
       print('[ERROR] Exception during GET request: $e');
-      throw ServeException('Erro na requisição GET: $e');
+      throw ServerException('Erro na requisição GET: $e');
     }
   }
 
@@ -56,7 +56,7 @@ class HttpClientService {
       return response;
     } catch (e) {
       print('[ERROR] Exception during POST request: $e');
-      throw ServeException('Erro na requisição POST: $e');
+      throw ServerException('Erro na requisição POST: $e');
     }
   }
 
@@ -67,30 +67,30 @@ class HttpClientService {
       case 201:
         return;
       case 400:
-        throw ServeException('Requisição inválida (400): ${response.body}');
+        throw ServerException('Requisição inválida (400): ${response.body}');
       case 401:
-        throw ServeException('Não autorizado (401): acesso negado.');
+        throw ServerException('Não autorizado (401): acesso negado.');
       case 403:
-        throw ServeException('Proibido (403): você não tem permissão.');
+        throw ServerException('Proibido (403): você não tem permissão.');
       case 404:
-        throw ServeException('Recurso não encontrado (404).');
+        throw ServerException('Recurso não encontrado (404).');
       case 422:
-        throw ServeException(
+        throw ServerException(
           'Entidade não processável (422): ${response.body}',
         );
       case 500:
-        throw ServeException(
+        throw ServerException(
           'Erro interno do servidor (500). Tente novamente mais tarde.',
         );
       default:
         if (response.statusCode >= 400 && response.statusCode < 500) {
-          throw ServeException(
+          throw ServerException(
             'Erro cliente ${response.statusCode}: ${response.body}',
           );
         } else if (response.statusCode >= 500) {
-          throw ServeException('Erro servidor ${response.statusCode}.');
+          throw ServerException('Erro servidor ${response.statusCode}.');
         } else {
-          throw ServeException(
+          throw ServerException(
             'Erro inesperado ${response.statusCode}: ${response.body}',
           );
         }
