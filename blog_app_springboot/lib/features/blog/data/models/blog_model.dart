@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:blog_app_springboot/features/blog/domain/entities/blog.dart';
@@ -28,11 +29,14 @@ class BlogModel extends Blog {
 
   factory BlogModel.fromJson(Map<String, dynamic> map) {
     return BlogModel(
-      id: map['id'] as String,
-      posterId: map['poster_id'] as String,
-      title: map['title'] as String,
-      content: map['content'] as String,
-      imageData: map['image_data'] as Uint8List,
+      id: map['id'].toString(),
+      posterId: map['user'] != null ? map['user']['id'].toString() : '',
+      title: map['title'] ?? '',
+      content: map['content'] ?? '',
+      imageData:
+          map['image_data'] != null
+              ? base64Decode(map['image_data'] as String)
+              : Uint8List(0),
       topics: List<String>.from(map['topics'] ?? []),
       updatedAt:
           map['updated_at'] == null

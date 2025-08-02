@@ -7,7 +7,14 @@ import 'package:blog_app_springboot/features/auth/domain/usecases/current_user.d
 import 'package:blog_app_springboot/features/auth/domain/usecases/use_login.dart';
 import 'package:blog_app_springboot/features/auth/domain/usecases/user_sign_up.dart';
 import 'package:blog_app_springboot/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:blog_app_springboot/features/blog/data/datasources/blog_remote_data_source.dart';
+import 'package:blog_app_springboot/features/blog/data/repositories/blog_repository_impl.dart';
+import 'package:blog_app_springboot/features/blog/domain/repositories/blog_repository.dart';
+import 'package:blog_app_springboot/features/blog/domain/usecases/get_all_blogs.dart';
+import 'package:blog_app_springboot/features/blog/domain/usecases/upload_blog.dart';
+import 'package:blog_app_springboot/features/blog/presentation/bloc/blog_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:http/http.dart' as http;
 
 final getIt = GetIt.instance;
 
@@ -16,11 +23,12 @@ Future<void> setupDependencies() async {
   getIt.registerSingleton<HttpClientService>(
     HttpClientService(baseUrl: AppSecrets.springBootUrl),
   );
-
-  //core
-  getIt.registerLazySingleton(() => AppUserCubit());
+  getIt.registerLazySingleton<http.Client>(() => http.Client());
 
   _initAuth();
+  _initBlog();
+
+  getIt.registerLazySingleton(() => AppUserCubit());
 }
 
 void _initAuth() {
@@ -56,4 +64,20 @@ void _initAuth() {
       appUserCubit: getIt<AppUserCubit>(),
     ),
   );
+}
+
+void _initBlog() {
+  // Datasource
+  getIt
+    ..registerFactory<BlogRemoteDataSource>(
+      () => BlogRemoteDataSourceImpl(getIt()),
+    )
+    ..registerFactory<BlogRepository>(() => BlogRepositoryImpl(getIt()))
+    // Usecases
+    ..registerFactory(() => UploadBlog(getIt()))
+    ..registerFactory(() => GetAllBlogs(getIt()))
+    // Bloc
+    ..registerLazySingleton(
+      () => BlogBloc(uploadBlog: getIt(), getAllBlogs: getIt()),
+    );
 }

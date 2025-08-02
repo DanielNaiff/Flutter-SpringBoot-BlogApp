@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'package:blog_app_springboot/core/common/entities/token.dart';
 import 'package:blog_app_springboot/core/error/exceptions.dart';
 import 'package:blog_app_springboot/features/blog/data/models/blog_model.dart';
 import 'package:http/http.dart' as http;
@@ -15,18 +16,20 @@ abstract interface class BlogRemoteDataSource {
 
 class BlogRemoteDataSourceImpl implements BlogRemoteDataSource {
   final http.Client client;
-  static const String _baseUrl =
-      'http://your-spring-boot-backend-url:8080/api/blogs';
+  static const String _baseUrl = 'http://localhost:8080/api/blogs';
+  final token = TokenStorage.getToken();
 
   BlogRemoteDataSourceImpl(this.client);
 
   @override
   Future<BlogModel> uploadBlog(BlogModel blog) async {
     try {
-      final response = await client.post(
+      final response = await client.get(
         Uri.parse(_baseUrl),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode(blog.toJson()),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
       );
 
       if (response.statusCode == 201) {
@@ -53,26 +56,31 @@ class BlogRemoteDataSourceImpl implements BlogRemoteDataSource {
           'Blog ID não está disponível para upload da imagem',
         );
       }
+
       var request = http.MultipartRequest(
         'POST',
         Uri.parse('$_baseUrl/images'),
       );
+
+      request.headers['Authorization'] = 'Bearer $token';
+
       request.files.add(
         http.MultipartFile.fromBytes(
           'image',
           image,
-          filename: '${blog.id}.jpg', // Nome do arquivo para referência
+          filename: '${blog.id}.jpg',
         ),
       );
+
       request.fields['blogId'] = blog.id.toString();
 
       final response = await request.send();
 
+      final responseBody = await response.stream.bytesToString();
+
       if (response.statusCode == 200) {
-        final responseData = await response.stream.bytesToString();
-        final jsonData = jsonDecode(responseData);
-        return jsonData['imageUrl']
-            as String; // Ajustar se o backend não retornar imageUrl
+        final jsonData = jsonDecode(responseBody);
+        return jsonData['imageUrl'] as String; // ou ajuste conforme backend
       } else {
         throw ServerException(
           'Falha ao fazer upload da imagem: ${response.statusCode}',
@@ -86,9 +94,22 @@ class BlogRemoteDataSourceImpl implements BlogRemoteDataSource {
   @override
   Future<List<BlogModel>> getAllBlogs() async {
     try {
+      final token = await TokenStorage.getToken();
+
+      print(token);
+
+      if (token is! String) {
+        throw Exception(
+          'Token deve ser uma String, mas é ${token.runtimeType}',
+        );
+      }
+
       final response = await client.get(
         Uri.parse(_baseUrl),
-        headers: {'Content-Type': 'application/json'},
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
       );
 
       if (response.statusCode == 200) {

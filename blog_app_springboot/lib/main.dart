@@ -3,6 +3,7 @@ import 'package:blog_app_springboot/core/theme/theme.dart';
 import 'package:blog_app_springboot/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:blog_app_springboot/features/auth/presentation/bloc/auth_event.dart';
 import 'package:blog_app_springboot/features/auth/presentation/pages/login_page.dart';
+import 'package:blog_app_springboot/features/blog/presentation/bloc/blog_bloc.dart';
 import 'package:blog_app_springboot/features/blog/presentation/pages/blog_page.dart';
 import 'package:blog_app_springboot/init_dependencies.dart';
 import 'package:device_preview/device_preview.dart';
@@ -20,6 +21,7 @@ void main() async {
             providers: [
               BlocProvider<AppUserCubit>(create: (_) => getIt<AppUserCubit>()),
               BlocProvider<AuthBloc>(create: (_) => getIt<AuthBloc>()),
+              BlocProvider<BlogBloc>(create: (_) => getIt<BlogBloc>()),
             ],
             child: const MyApp(),
           ),

@@ -60,7 +60,6 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       // Retorna usuário
       return UserModel.fromJson(data);
     } else {
-      print("oooooooooooh");
       throw ServerException('Erro ao logar: ${response.statusCode}');
     }
   }
