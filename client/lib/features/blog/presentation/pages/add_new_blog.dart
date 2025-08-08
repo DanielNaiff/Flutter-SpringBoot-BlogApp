@@ -8,6 +8,7 @@ import 'package:blog_app_springboot/core/constants/constants.dart';
 import 'package:blog_app_springboot/core/theme/app_pallete.dart';
 import 'package:blog_app_springboot/core/utils/pick_image.dart';
 import 'package:blog_app_springboot/core/utils/show_snackbar.dart';
+import 'package:blog_app_springboot/features/blog/data/models/blog_model.dart';
 import 'package:blog_app_springboot/features/blog/presentation/bloc/blog_bloc.dart';
 import 'package:blog_app_springboot/features/blog/presentation/pages/blog_page.dart';
 import 'package:blog_app_springboot/features/blog/presentation/widgets/blog_editor.dart';
@@ -52,6 +53,18 @@ class _AddNewBlogPageState extends State<AddNewBlogPage> {
         image != null) {
       final posterId =
           (context.read<AppUserCubit>().state as AppUserLoggedIn).user.id;
+
+      final blogModel = BlogModel(
+        id: '',
+        posterId: posterId,
+        title: titleController.text.trim(),
+        content: contentController.text.trim(),
+        imageData: image!,
+        topics: selectedTopics,
+        updatedAt: DateTime.now(),
+        posterName: null, // opcional
+      );
+
       context.read<BlogBloc>().add(
         BlogUpload(
           posterId: posterId,
@@ -59,6 +72,7 @@ class _AddNewBlogPageState extends State<AddNewBlogPage> {
           content: contentController.text.trim(),
           image: image!,
           topics: selectedTopics,
+          blog: blogModel,
         ),
       );
     }
@@ -109,10 +123,7 @@ class _AddNewBlogPageState extends State<AddNewBlogPage> {
                             height: 150,
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(10),
-                              child: Image.file(
-                                image! as File,
-                                fit: BoxFit.cover,
-                              ),
+                              child: Image.memory(image!, fit: BoxFit.cover),
                             ),
                           ),
                         )
@@ -128,7 +139,7 @@ class _AddNewBlogPageState extends State<AddNewBlogPage> {
                               strokeCap: StrokeCap.round,
                             ),
 
-                            child: Container(
+                            child: SizedBox(
                               height: 150,
                               width: double.infinity,
                               child: const Column(

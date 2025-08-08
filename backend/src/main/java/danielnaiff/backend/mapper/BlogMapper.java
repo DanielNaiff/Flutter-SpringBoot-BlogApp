@@ -16,7 +16,6 @@ public class BlogMapper {
         blog.setContent(dto.content());
         blog.setUser(user);
         blog.setTopics(dto.topics());
-        blog.setImageData(dto.imageData());
         blog.setCreateAt(Instant.now());
         blog.setUpdatedAt(Instant.now());
 

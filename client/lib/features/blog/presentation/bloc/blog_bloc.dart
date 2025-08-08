@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:bloc/bloc.dart';
 import 'package:blog_app_springboot/core/common/entities/user.dart';
+import 'package:blog_app_springboot/features/blog/data/models/blog_model.dart';
 import 'package:blog_app_springboot/features/blog/domain/entities/blog.dart';
 import 'package:blog_app_springboot/features/blog/domain/usecases/get_all_blogs.dart';
 import 'package:blog_app_springboot/features/blog/domain/usecases/upload_blog.dart';
@@ -31,6 +32,7 @@ class BlogBloc extends Bloc<BlogEvent, BlogState> {
         content: event.content,
         image: event.image,
         topics: event.topics,
+        blog: event.blog,
       ),
     );
 

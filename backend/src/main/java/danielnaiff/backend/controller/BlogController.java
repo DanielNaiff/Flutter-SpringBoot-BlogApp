@@ -3,9 +3,12 @@ package danielnaiff.backend.controller;
 import danielnaiff.backend.entities.dto.blog.BlogRequestDTO;
 import danielnaiff.backend.entities.dto.blog.BlogResponseDTO;
 import danielnaiff.backend.service.BlogService;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 
@@ -19,13 +22,27 @@ public class BlogController {
         this.blogService = blogService;
     }
 
-    @PostMapping
-    public ResponseEntity<BlogResponseDTO> createBlog(@RequestBody BlogRequestDTO blogRequestDTO) throws Exception {
-        BlogResponseDTO blogResponseDTO = blogService.createBlog(blogRequestDTO);
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<BlogResponseDTO> createBlog(
+            @RequestPart("blog")  BlogRequestDTO blogRequestDTO,
+            @RequestPart("image") MultipartFile image
+    ) throws Exception {
+        // Substitui o imageData pelo conteúdo real da imagem
+        blogRequestDTO = new BlogRequestDTO(
+                blogRequestDTO.userId(),
+                image.getBytes(), // Atualiza a imagem aqui
+                blogRequestDTO.title(),
+                blogRequestDTO.content(),
+                blogRequestDTO.topics()
+        );
+
+        BlogResponseDTO response = blogService.createBlog(blogRequestDTO);
+
         return ResponseEntity
-                .created(URI.create("/api/blogs/" + blogResponseDTO.id()))
-                .body(blogResponseDTO);
+                .created(URI.create("/api/blogs/" + response.id()))
+                .body(response);
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<BlogResponseDTO> findById(@PathVariable Long id) throws Exception{
